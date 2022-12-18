@@ -1,0 +1,57 @@
+<mat-card id="content">
+  <mat-card-header>
+    <mat-card-title>Profil</mat-card-title>
+    <mat-card-subtitle>Einstellungen</mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content id="main">
+    <form [formGroup]="form" (ngSubmit)="update()" id="form">
+      <mat-form-field>
+        <mat-label>E-Mail</mat-label>
+        <input type="text" matInput formControlName="email" required>
+        <mat-error *ngIf="form.hasError('required', 'email')">E-Mail ist erforderlich</mat-error>
+        <mat-error *ngIf="form.hasError('email', 'email') && !form.hasError('required', 'email')">
+          Bitte geben Sie eine gültige E-Mail-Adresse ein
+        </mat-error>
+        <mat-error *ngIf="form.hasError('maxlength', 'email') && !form.hasError('required', 'email')">
+          Der eingegebene Wert ist zu lang
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Benutzername</mat-label>
+        <input type="text" matInput formControlName="username" required>
+        <mat-error *ngIf="form.hasError('required', 'username')">Benutzername ist erforderlich</mat-error>
+        <mat-error *ngIf="form.hasError('maxlength', 'username') && !form.hasError('required', 'username')">
+          Der eingegebene Wert ist zu lang
+        </mat-error>
+      </mat-form-field>
+
+      <div>
+        <mat-form-field>
+          <mat-label>Passwort</mat-label>
+          <input type="password" matInput formControlName="password">
+          <mat-error *ngIf="form.hasError('maxlength', 'password')">
+            Der eingegebene Wert ist zu lang
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Passwort wiederholen</mat-label>
+          <input type="password" matInput formControlName="passwordRepeat">
+          <mat-error *ngIf="form.hasError('maxlength', 'passwordRepeat')">
+            Der eingegebene Wert ist zu lang
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <mat-error>{{error}}</mat-error>
+      <button type="submit" hidden></button>
+    </form>
+  </mat-card-content>
+
+  <mat-card-actions id="actions">
+    <button mat-button color="primary" (click)="update()">Account aktualisieren</button>
+    <button mat-button color="warn" (click)="delete()">Account löschen</button>
+  </mat-card-actions>
+</mat-card>

@@ -1,0 +1,27 @@
+version: '3.0'
+services:
+  frontend:
+    build: ProjectManager.Frontend
+    restart: unless-stopped
+    environment:
+      - BACKEND=https://api.example.com
+    ports:
+      - '4220:4000'
+
+  backend:
+    build: ProjectManager.Backend
+    restart: unless-stopped
+    environment:
+      - FRONTEND=https://example.com
+      - GENERAL__DATABASE=server=1.2.3.4;database=ProjectManager;user=ProjectManager;password=changeMe
+      - GENERAL__ROOT=/projects
+      - PROXY__ENABLE=true
+      - PROXY__URL=https://proxy.example.com
+      - PROXY__EMAIL=admin@example.com
+      - PROXY__PASSWORD=changeMe
+      - PROXY__DOMAIN=api.example.com
+      - PROXY__HOST=1.2.3.4
+    ports:
+      - '4221:80'
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock

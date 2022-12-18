@@ -1,0 +1,14 @@
+<h1 mat-dialog-title *ngIf="data.title != undefined">{{data.title}}</h1>
+<form mat-dialog-content (submit)="$event.preventDefault(); dialogRef.close({success: true, data: text.value})">
+  <mat-form-field>
+    <mat-label>{{data.subtitle}}</mat-label>
+    <input type="text" matInput #text>
+  </mat-form-field>
+</form>
+<div mat-dialog-actions *ngIf="data.buttons != undefined" id="buttons">
+  <button mat-button
+          (click)="dialogRef.close({success: button.value, data: text.value})"
+          *ngFor="let button of data.buttons"
+          [color]="button.color"
+  >{{button.text}}</button>
+</div>

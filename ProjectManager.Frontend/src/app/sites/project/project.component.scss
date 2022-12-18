@@ -1,0 +1,10 @@
+:host {
+  display: flex;
+  height: calc(100% - 64px);
+}
+
+iframe {
+  border: none;
+  flex-grow: 1;
+  flex-shrink: 1;
+}

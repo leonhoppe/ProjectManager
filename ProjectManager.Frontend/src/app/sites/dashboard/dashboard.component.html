@@ -1,0 +1,23 @@
+<section id="main">
+  <h1 id="welcome">Willkommen {{crud.user.username}}</h1>
+
+  <h2 id="title">Projekte</h2>
+  <div id="projects">
+    <span *ngIf="projects.projects.length == 0 && crud.user != undefined" class="disabled">Du hast noch keine Projekte erstellt</span>
+    <mat-card *ngFor="let project of projects.projects" class="project">
+      <mat-card-header>
+        <mat-card-title>{{project.name}}</mat-card-title>
+        <mat-card-subtitle>{{project.projectId}}</mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-card-actions>
+        <button mat-button color="primary" (click)="router.navigate(['/project', project.projectId])">Öffnen</button>
+        <button mat-button color="accent" (click)="editProject(project.projectId)">Bearbeiten</button>
+        <button mat-button color="warn" (click)="deleteProject(project.projectId)">Löschen</button>
+
+        <button mat-icon-button color="warn" *ngIf="project.running" (click)="updateProjectStatus(project.projectId, false)"><mat-icon>pause</mat-icon></button>
+        <button mat-icon-button color="accent" *ngIf="!project.running" (click)="updateProjectStatus(project.projectId, true)"><mat-icon>play_arrow</mat-icon></button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</section>

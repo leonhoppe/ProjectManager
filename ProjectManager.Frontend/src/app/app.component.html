@@ -1,0 +1,5 @@
+<app-navigation *ngIf="isLoginRoute() || crud.user != undefined; else loading"></app-navigation>
+
+<ng-template #loading>
+  <mat-spinner></mat-spinner>
+</ng-template>

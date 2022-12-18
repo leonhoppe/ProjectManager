@@ -1,0 +1,35 @@
+:host {
+  display: flex;
+  justify-content: center;
+  padding-top: 300px;
+}
+
+mat-card {
+  user-select: none;
+  width: 500px;
+
+  mat-card-title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 30px;
+    height: 50px;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    padding-block: 20px;
+    gap: 20px;
+
+    button {
+      width: min-content;
+      align-self: center;
+    }
+  }
+
+  a {
+    color: unset;
+  }
+}

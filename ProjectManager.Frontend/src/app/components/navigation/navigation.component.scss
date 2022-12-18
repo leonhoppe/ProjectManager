@@ -1,0 +1,36 @@
+mat-drawer-container {
+  width: 100vw;
+  height: 100vh;
+
+  #sidebar {
+    width: 250px;
+
+    #profile {
+      gap: 20px;
+      overflow-x: hidden;
+    }
+
+    #actions {
+      height: calc(100vh - 80px);
+      overflow-y: auto;
+    }
+  }
+}
+
+#header {
+  gap: 10px;
+  padding-left: 5px;
+
+  #top-actions {
+    margin-left: auto;
+  }
+}
+
+mat-spinner {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

@@ -1,0 +1,46 @@
+#main {
+  height: calc(100vh - 125px);
+  margin: 30px;
+  display: flex;
+  flex-direction: column;
+
+  #welcome {
+    font-size: 30px;
+  }
+
+  #projects {
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+    overflow-y: auto;
+
+    .project {
+      width: 350px;
+      height: 200px;
+      overflow-y: auto;
+      opacity: 0;
+      animation: 200ms project ease-out forwards;
+
+      mat-card-actions {
+        margin-top: auto;
+        justify-content: space-evenly;
+      }
+    }
+
+    @for $i from 1 through 100 {
+      .project:nth-child(#{$i}n) {
+        animation-delay: #{$i * 0.1}s;
+      }
+    }
+  }
+}
+
+@keyframes project {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
