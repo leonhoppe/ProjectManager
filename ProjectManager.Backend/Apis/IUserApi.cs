@@ -29,8 +29,11 @@ public sealed class UserApi : IUserApi {
     
     public User Login(User login) {
         if (string.IsNullOrEmpty(login.Email) || string.IsNullOrEmpty(login.Password)) return null;
-        var hash = Hash128(login.Password, login.Email);
-        return _context.Users.SingleOrDefault(user => user.Email == login.Email && user.Password == hash);
+        var user = _context.Users.SingleOrDefault(user => user.Email == login.Email);
+        if (user == null) return null;
+        var hash = Hash128(login.Password, user.UserId);
+        if (user.Password != hash) return null;
+        return user;
     }
 
     public User Register(User register) {
@@ -51,9 +54,9 @@ public sealed class UserApi : IUserApi {
             UserId = Guid.NewGuid().ToString(),
             Email = register.Email,
             Username = register.Username,
-            Password = Hash128(register.Password, register.Email),
             MaxProjects = _options.MaxProjects
         };
+        user.Password = Hash128(register.Password, user.UserId);
 
         _context.Users.Add(user);
         _context.SaveChanges();
@@ -82,7 +85,7 @@ public sealed class UserApi : IUserApi {
         if (user == null) return false;
         if (!string.IsNullOrEmpty(update.Email)) user.Email = update.Email;
         if (!string.IsNullOrEmpty(update.Username)) user.Username = update.Username;
-        if (!string.IsNullOrEmpty(update.Password)) user.Password = Hash128(update.Password, user.Email);
+        if (!string.IsNullOrEmpty(update.Password)) user.Password = Hash128(update.Password, user.UserId);
         _context.Users.Update(user);
         _context.SaveChanges();
         return true;
