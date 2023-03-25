@@ -1,17 +1,17 @@
 # Project Manager
 Der ProjectManager ist ein Tool zum Verwalten von mehreren PocketBase Instanzen.
-Es handelt sich hierbei um ein einfach zu benutzendes WebInterface zum erstellen, bearbeiten und löschen von PocketBase Instanzen.
+Es handelt sich hierbei um ein einfach zu benutzendes WebInterface zum Erstellen, Bearbeiten und Löschen von PocketBase Instanzen.
 
 ## Features
 - [x] Automatische Docker Konfiguration
 - [x] Automatisches DNS Mapping
-- [x] Automatische SSL Konfiguration mithilfe von NginxProxyManager
-- [ ] Projekt transferierung auf verschiedene Nodes
+- [x] Automatische SSL-Konfiguration mithilfe von NginxProxyManager
+- [ ] Projekt Transferierung auf verschiedene Nodes
 - [ ] Eigene Domains
 - [ ] Mehrere Sprachen
 
-## Instalation
-Die Instalation erfolgt durch eine Docker-Compose Datei. Hierbei werden zwei Container, einer für das Backend und einer für das Frontend, gestartet.
+## Installation
+Die Installation erfolgt durch eine Docker-Compose Datei. Hierbei werden zwei Container, einer für das Backend und einer für das Frontend, gestartet.
 Die Standartkonfiguration sieht wie folgt aus:
 
 ```yml
@@ -43,17 +43,17 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
 ```
-### Enviroment Variablen
+### Environment Variablen
 
 | Variable          | Bedeutung                                                            |
 |-------------------|----------------------------------------------------------------------|
 | BACKEND           | Die URL des Backends                                                 |
 | FRONTEND          | Die URL des Frontends                                                |
 | GENERAL__DATABASE | Der MySql Connection String                                          |
-| GENERAL__ROOT     | Ordner auf dem Hostsystem zur Speicherung der PocketBase Datein      |
-| PROXY__ENABLE     | Aktiviert die eingebaute SSL verschlüsselung durch NginxProxyManager |
+| GENERAL__ROOT     | Ordner auf dem Hostsystem zur Speicherung der PocketBase Dateien     |
+| PROXY__ENABLE     | Aktiviert die eingebaute SSL Verschlüsselung durch NginxProxyManager |
 | PROXY__URL        | Die URL für das WebInterface des NginxProxyManager                   |
-| PROXY__EMAIL      | E-Mail Adresse für einen Admin Benutzer von NginxProxyManager        |
+| PROXY__EMAIL      | E-Mail-Adresse für einen Admin Benutzer von NginxProxyManager        |
 | PROXY__PASSWORD   | Passwort für einen Admin Benutzer von NginxProxyManager              |
 | PROXY__DOMAIN     | Standart Domain für PocketBase instanzen ([id].api.example.com)      |
 | PROXY__HOST       | Hostadresse des Servers (für die reverse proxy)                      |
@@ -61,6 +61,6 @@ services:
 ### Docker Images von SourceCode generieren
 Falls Sie den SourceCode selbst bearbeiten wollen, steht Ihnen dieser natürlich zur Verfügung. Um das Backend im Debug Modus zu verwenden sollten sie eine 
 ``appsettings.Development.json`` Datei im Hauptverzeichnis anlegen um dort die entsprechende Konfiguration für die Entwicklungsumgebung erstellen.
-Zum Debuggen empfehle ich ``npm run dev:ssr`` um das Frontend zu starten und ``dotnet run``um das Backend zu starten. Sofern Sie mit den Bearbeitungen fertig
-sind gibt es eine ``docker-compose.example.yml`` Datei im dem Repository die automatisch den SoruceCode neu baut und die Container startet.
+Zum Debuggen empfehle ich ``npm run dev:ssr`` um das Frontend zu starten und ``dotnet run`` um das Backend zu starten. Sofern Sie mit den Bearbeitungen fertig
+sind, gibt es eine ``docker-compose.example.yml`` Datei im dem Repository die automatisch den SoruceCode neu baut und die Container startet.
 Wahlweise können Sie diese mit ``docker build`` auch selbst bauen.
