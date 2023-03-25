@@ -1,13 +1,15 @@
 ﻿using System.Dynamic;
 using System.Text.Json;
 using Microsoft.Extensions.Options;
+using ProjectManager.Backend.Entities;
 using ProjectManager.Backend.Options;
 
 namespace ProjectManager.Backend.Apis; 
 
 public interface IProxyApi {
-    public Task<(int, int)> AddLocation(string projectId, int port);
+    public Task<(int, int)> AddLocation(string domain, int port);
     public Task RemoveLocation(int proxyId, int certificateId);
+    public Task<(int, int)> UpdateLocation(Project project);
 }
 
 public sealed class ProxyApi : IProxyApi {
@@ -27,11 +29,11 @@ public sealed class ProxyApi : IProxyApi {
         _client.DefaultRequestHeaders.Add("Authorization", $"Bearer {response?.token}");
     }
 
-    public async Task<(int, int)> AddLocation(string projectId, int port) {
+    public async Task<(int, int)> AddLocation(string domain, int port) {
         if (!_options.Enable) return (-1, -1);
         await Login();
         var result = await _client.PostAsJsonAsync(_options.Url + "/api/nginx/proxy-hosts",
-            new CreateData($"{projectId}.{_options.Domain}", _options.Host, port, _options.Email));
+            new ProxyData(domain, _options.Host, port, _options.Email));
         dynamic data = await result.Content.ReadFromJsonAsync<ExpandoObject>();
         if (data == null) return (-1, -1);
         int id = Convert.ToInt32($"{data.id}");
@@ -46,9 +48,15 @@ public sealed class ProxyApi : IProxyApi {
         await _client.DeleteAsync(_options.Url + "/api/nginx/certificates/" + certificateId);
     }
 
+    public async Task<(int, int)> UpdateLocation(Project project) {
+        if (!_options.Enable) return (-1, -1);
+        await RemoveLocation(project.ProxyId, project.CertificateId);
+        return await AddLocation(project.Domain, project.Port);
+    }
+
     private sealed record ProxyAuth(string identity, string secret);
     private sealed record TokenResponse(string token, string expires);
-    private sealed class CreateData {
+    private sealed class ProxyData {
         public string access_list_id { get; set; } = "0";
         public string advanced_config { get; set; } = "    location / {\r\n        proxy_pass http://%docker_ip%;\r\n        proxy_hide_header X-Frame-Options;\r\n    }";
         public bool allow_websocket_upgrade { get; set; } = true;
@@ -66,7 +74,7 @@ public sealed class ProxyApi : IProxyApi {
         public bool ssl_forced { get; set; } = true;
         public SslMeta meta { get; set; }
 
-        public CreateData(string domain, string ip, int port, string email) {
+        public ProxyData(string domain, string ip, int port, string email) {
             domain_names = new[] { domain };
             forward_host = ip;
             forward_port = port;

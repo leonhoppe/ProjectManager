@@ -31,8 +31,8 @@ export class ProjectService {
     return response.content?.projectId;
   }
 
-  public async editProject(projectId: string, name: string): Promise<boolean> {
-    const response = await this.crud.sendPutRequest("projects/" + projectId, {name});
+  public async editProject(projectId: string, name: string, domain: string): Promise<boolean> {
+    const response = await this.crud.sendPutRequest("projects/" + projectId, {name, domain});
     return response.success;
   }
 

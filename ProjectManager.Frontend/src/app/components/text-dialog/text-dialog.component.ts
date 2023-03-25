@@ -12,4 +12,5 @@ export class TextDialogComponent {
     public dialogRef: MatDialogRef<TextDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
   ) {}
+
 }

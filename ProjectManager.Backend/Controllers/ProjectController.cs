@@ -70,11 +70,11 @@ public class ProjectController : ControllerBase {
 
     [Authorized]
     [HttpPut("{projectId}")]
-    public IActionResult EditProject(string projectId, [FromBody] ProjectEdit edit) {
+    public async Task<IActionResult> EditProject(string projectId, [FromBody] ProjectEdit edit) {
         var project = _projects.GetProject(projectId);
         if (project == null) return NotFound();
         if (project.OwnerId != _context.UserId) return Unauthorized();
-        _projects.EditProject(projectId, edit.Name);
+        await _projects.EditProject(projectId, edit.Name, edit.Domain);
         return Ok();
     }
 
@@ -84,7 +84,7 @@ public class ProjectController : ControllerBase {
         var project = _projects.GetProject(projectId);
         if (project == null) return NotFound();
         if (project.OwnerId != _context.UserId) return Unauthorized();
-        if (_options.Enable) return Redirect($"https://{projectId}.{_options.Domain}/_/");
+        if (_options.Enable) return Redirect($"https://{project.Domain}/_/");
         return Redirect($"http://{_options.Host}:{project.Port}/_/");
     }
 
@@ -94,7 +94,7 @@ public class ProjectController : ControllerBase {
         var project = _projects.GetProject(projectId);
         if (project == null) return NotFound();
         if (project.OwnerId != _context.UserId) return Unauthorized();
-        if (_options.Enable) return Ok(new {url = $"https://{projectId}.{_options.Domain}/_/"});
+        if (_options.Enable) return Ok(new {url = $"https://{project.Domain}/_/"});
         return Ok(new {url = $"http://{_options.Host}:{project.Port}/_/"});
     }
 

@@ -4,10 +4,14 @@
     <mat-label>{{data.subtitle}}</mat-label>
     <input type="text" matInput #text>
   </mat-form-field>
+  <mat-form-field [ngStyle]="{'display': data.secondInput ? 'block' : 'none'}">
+    <mat-label>{{data.secondInput}}</mat-label>
+    <input type="text" matInput #text2>
+  </mat-form-field>
 </form>
-<div mat-dialog-actions *ngIf="data.buttons != undefined" id="buttons">
+<div mat-dialog-actions *ngIf="data.buttons != undefined" class="buttons">
   <button mat-button
-          (click)="dialogRef.close({success: button.value, data: text.value})"
+          (click)="dialogRef.close({success: button.value, data: text.value, data2: text2?.value})"
           *ngFor="let button of data.buttons"
           [color]="button.color"
   >{{button.text}}</button>

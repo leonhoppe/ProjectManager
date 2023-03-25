@@ -16,12 +16,16 @@
   open: string,
   edit: string,
   delete: string,
+  deleteProjQuestion: string,
 
   // Popups
   name: string,
+  domain: string,
   cancel: string,
   createProject: string,
-  editProject: string
+  editProject: string,
+  updateProject: string,
+  deleteProject: string,
 
   // Profile
   profile: string,

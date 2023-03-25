@@ -1,0 +1,13 @@
+form {
+  width: 350px;
+
+  & > * {
+    width: 100%;
+  }
+}
+
+.buttons {
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+}

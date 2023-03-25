@@ -6,9 +6,9 @@ Es handelt sich hierbei um ein einfach zu benutzendes WebInterface zum Erstellen
 - [x] Automatische Docker Konfiguration
 - [x] Automatisches DNS Mapping
 - [x] Automatische SSL-Konfiguration mithilfe von NginxProxyManager
+- [x] Mehrere Sprachen
+- [x] Eigene Domains
 - [ ] Projekte exportieren / importieren
-- [ ] Eigene Domains
-- [ ] Mehrere Sprachen
 
 ## Installation
 Die Installation erfolgt durch eine Docker-Compose Datei. Hierbei werden zwei Container, einer für das Backend und einer für das Frontend, gestartet.

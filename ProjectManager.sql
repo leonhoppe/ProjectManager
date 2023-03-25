@@ -3,6 +3,7 @@ CREATE TABLE `Projects` (
   `ownerId` varchar(36) DEFAULT NULL,
   `name` varchar(255) DEFAULT NULL,
   `port` int(5) DEFAULT NULL,
+  `domain` varchar(255) DEFAULT NULL,
   `containerName` varchar(255) DEFAULT NULL,
   `proxyId` int(30) DEFAULT NULL,
   `certificateId` int(30) DEFAULT NULL

@@ -14,11 +14,15 @@
   "open": "Open",
   "edit": "Edit",
   "delete": "Delete",
+  "deleteProjQuestion": "Do you really want to delete this project?",
 
   "name": "Name",
+  "domain": "Domain",
   "cancel": "Cancel",
   "createProject": "Create project",
   "editProject": "Edit project",
+  "updateProject": "Updated project!",
+  "deleteProject": "Deleted project!",
 
   "profile": "Profile",
   "profileSub": "Settings",
@@ -32,7 +36,7 @@
   "updateFailed": "Update failed",
   "accountUpdated": "Account updated",
   "deleteQuestion": "Do you really want to delete your account?",
-  "deleteWarning": "All your data will be lost!",
+  "deleteWarning": "All data will be lost forever!",
   "accountDeleted": "Account deleted!",
   "submit": "Submit",
 

@@ -33,24 +33,26 @@ export class DashboardComponent {
 
   public async editProject(projectId: string) {
     const dialogRef = this.dialog.open(TextDialogComponent, {
-      data: {title: "Projekt umbenennen", subtitle: "Name", buttons: [
-          {text: "Abbrechen", value: false},
-          {text: "Projekt bearbeiten", value: true, color: 'primary'}
-        ]}
+      data: {title: this.langs.currentLang?.editProject, subtitle: "Name", secondInput: this.langs.currentLang?.domain, buttons: [
+          {text: this.langs.currentLang?.cancel, value: false},
+          {text: this.langs.currentLang?.editProject, value: true, color: 'primary'}
+      ]}
     });
 
-    const result = await firstValueFrom(dialogRef.afterClosed()) as {success: boolean, data: string};
+    const result = await firstValueFrom(dialogRef.afterClosed()) as {success: boolean, data: string, data2: string};
     if (!result?.success) return;
-    await this.projects.editProject(projectId, result.data);
+    NavigationComponent.spinnerVisible = true;
+    await this.projects.editProject(projectId, result.data, result.data2);
+    NavigationComponent.spinnerVisible = false;
     await this.projects.loadProjects();
-    this.snackBar.open("Projekt aktualisiert!", undefined, {duration: 2000});
+    this.snackBar.open(this.langs.currentLang?.updateProject, undefined, {duration: 2000});
   }
 
   public async deleteProject(projectId: string) {
     const dialogRef = this.dialog.open(DialogComponent, {
-      data: {title: "Möchtest du das Projekt wirklich löschen?", subtitle: "Alle gespeicherten Daten gehen dann verloren!", buttons: [
-          {text: "Abbrechen", value: false},
-          {text: "Löschen", value: true, color: 'warn'}
+      data: {title: this.langs.currentLang?.deleteProjQuestion, subtitle: this.langs.currentLang?.deleteWarning, buttons: [
+          {text: this.langs.currentLang?.cancel, value: false},
+          {text: this.langs.currentLang?.delete, value: true, color: 'warn'}
       ]}
     });
 
@@ -60,7 +62,7 @@ export class DashboardComponent {
     await this.projects.deleteProject(projectId);
     NavigationComponent.spinnerVisible = false;
     await this.projects.loadProjects();
-    this.snackBar.open("Projekt gelöscht!", undefined, {duration: 2000});
+    this.snackBar.open(this.langs.currentLang?.deleteProject, undefined, {duration: 2000});
   }
 
   public async updateProjectStatus(projectId: string, start: boolean) {

@@ -2,6 +2,7 @@
   projectId?: string;
   ownerId?: string;
   name?: string;
+  domain?: string;
   port?: number;
   containerName?: string;
   proxyId?: number;

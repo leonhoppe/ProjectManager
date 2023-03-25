@@ -21,19 +21,19 @@ export class LangService {
     const res = await firstValueFrom(this.crud.client.get<{files: string[]}>(location?.origin + "/lang"));
     const languages = res.files;
     this.allLanguages = languages.map(lang => lang.replace(".json", ""));
-    const tasks = [];
-
-    for (let lang of languages) {
-      const task = firstValueFrom(this.crud.client.get<Language>(location?.origin + "/assets/languages/" + lang))
-        .then(result => this.languages.set(lang.replace(".json", ""), result));
-      tasks.push(task);
-    }
-
-    await Promise.all(tasks);
-    this.currentLang = this.languages.get(this.storage.getItem("language") || "en-US");
+    this.currentLang = await this.loadLanguage(this.storage.getItem("language") || "en-US");
   }
 
-  public setLanguage(lang: string) {
+  private async loadLanguage(name: string): Promise<Language> {
+    const lang = await firstValueFrom(this.crud.client.get<Language>(`${location.origin}/assets/languages/${name}.json`));
+    this.languages.set(name, lang);
+    return lang;
+  }
+
+  public async setLanguage(lang: string) {
+    if (this.languages.get(lang) == undefined)
+      await this.loadLanguage(lang);
+
     this.currentLang = this.languages.get(lang);
     this.storage.setItem("language", lang);
   }

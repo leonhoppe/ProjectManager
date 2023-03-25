@@ -8,19 +8,21 @@ public interface IProjectApi {
     public Project[] GetProjects(string userId);
     public Project GetProject(string projectId);
     public Task<string> AddProject(string name, string ownerId);
-    public bool EditProject(string projectId, string name);
+    public Task<bool> EditProject(string projectId, string name, string domain);
     public Task DeleteProject(string projectId);
 }
 
 public class ProjectApi : IProjectApi {
     private readonly DatabaseContext _context;
     private readonly GeneralOptions _options;
+    private readonly ProxyOptions _proxyOptions;
     private readonly IDockerApi _docker;
     private readonly IProxyApi _proxy;
 
-    public ProjectApi(DatabaseContext context, IOptions<GeneralOptions> options, IDockerApi docker, IProxyApi proxy) {
+    public ProjectApi(DatabaseContext context, IOptions<GeneralOptions> options, IOptions<ProxyOptions> proxyOptions, IDockerApi docker, IProxyApi proxy) {
         _context = context;
         _options = options.Value;
+        _proxyOptions = proxyOptions.Value;
         _docker = docker;
         _proxy = proxy;
     }
@@ -49,12 +51,13 @@ public class ProjectApi : IProjectApi {
             Name = name,
             Port = port
         };
+        project.Domain = _proxyOptions.Enable ? $"{project.ProjectId}.{_proxyOptions.Domain}" : $"{_proxyOptions.Host}:{project.Port}";
 
         var container = await _docker.CreateContainer($"ghcr.io/muchobien/pocketbase:{_options.PocketBaseVersion}", port, _options.Root + project.ProjectId, $"{project.Name}_{project.ProjectId}");
         await _docker.StartContainer(container);
         project.ContainerName = container;
         
-        var (proxyId, certificateId) = await _proxy.AddLocation(project.ProjectId, project.Port);
+        var (proxyId, certificateId) = await _proxy.AddLocation(project.Domain, project.Port);
         project.ProxyId = proxyId;
         project.CertificateId = certificateId;
         
@@ -64,13 +67,22 @@ public class ProjectApi : IProjectApi {
         return project.ProjectId;
     }
 
-    public bool EditProject(string projectId, string name) {
+    public async Task<bool> EditProject(string projectId, string name, string domain) {
         if (name.Length > 255) return false;
+        if (domain.Length > 255) return false;
         var project = GetProject(projectId);
         if (project == null) return false;
         project.Name = name;
+
+        if (!string.IsNullOrEmpty(domain)) {
+            project.Domain = domain;
+            var data = await _proxy.UpdateLocation(project);
+            project.ProxyId = data.Item1;
+            project.CertificateId = data.Item2;
+        }
+        
         _context.Projects.Update(project);
-        _context.SaveChanges();
+        await _context.SaveChangesAsync();
         return true;
     }
 

@@ -14,11 +14,15 @@
   "open": "Öffnen",
   "edit": "Bearbeiten",
   "delete": "Löschen",
+  "deleteProjQuestion": "Möchtest du dieses Projekt wirklich löschen?",
 
   "name": "Name",
+  "domain": "Domain",
   "cancel": "Abbrechen",
   "createProject": "Projekt erstellen",
   "editProject": "Projekt bearbeiten",
+  "updateProject": "Projekt aktualisiert!",
+  "deleteProject": "Projekt gelöscht!",
 
   "profile": "Profil",
   "profileSub": "Einstellungen",
@@ -32,7 +36,7 @@
   "updateFailed": "Aktualisierung fehlgeschlagen",
   "accountUpdated": "Account aktualisiert!",
   "deleteQuestion": "Möchtest du deinen Account wirklich löschen?",
-  "deleteWarning": "All deine Projekte werden für immer gelöscht!",
+  "deleteWarning": "Alle Daten werden für immer gelöscht!",
   "accountDeleted": "Account gelöscht!",
   "submit": "Bestätigen",
 

@@ -1,6 +1,6 @@
 <h1 mat-dialog-title *ngIf="data.title != undefined">{{data.title}}</h1>
 <div mat-dialog-content *ngIf="data.subtitle != undefined">{{data.subtitle}}</div>
-<div mat-dialog-actions *ngIf="data.buttons != undefined" id="buttons">
+<div mat-dialog-actions *ngIf="data.buttons != undefined" class="buttons">
   <button mat-button
           (click)="dialogRef.close(button.value)"
           *ngFor="let button of data.buttons"

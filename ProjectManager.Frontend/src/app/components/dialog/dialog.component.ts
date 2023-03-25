@@ -6,6 +6,7 @@ export interface DialogData {
   title?: string;
   subtitle?: string;
   buttons?: {text: string, value: any, color: ThemePalette}[];
+  secondInput?: string;
 }
 
 @Component({
