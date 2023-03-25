@@ -31,7 +31,7 @@ services:
     environment:
       - FRONTEND=https://example.com
       - GENERAL__DATABASE=server=1.2.3.4;database=ProjectManager;user=ProjectManager;password=changeMe
-      - GENERAL__ROOT=/projects
+      - GENERAL__ROOT=/projects/
       - PROXY__ENABLE=true
       - PROXY__URL=https://proxy.example.com
       - PROXY__EMAIL=admin@example.com
@@ -58,7 +58,7 @@ services:
 | PROXY__DOMAIN     | Standart Domain für PocketBase instanzen ([id].api.example.com)      |
 | PROXY__HOST       | Hostadresse des Servers (für die reverse proxy)                      |
 
-### Docker Images von SourceCode generieren
+### SourceCode bearbeiten und Docker Images selber erstellen
 Falls Sie den SourceCode selbst bearbeiten wollen, steht Ihnen dieser natürlich zur Verfügung. Um das Backend im Debug Modus zu verwenden sollten sie eine 
 ``appsettings.Development.json`` Datei im Hauptverzeichnis anlegen um dort die entsprechende Konfiguration für die Entwicklungsumgebung erstellen.
 Zum Debuggen empfehle ich ``npm run dev:ssr`` um das Frontend zu starten und ``dotnet run`` um das Backend zu starten. Sofern Sie mit den Bearbeitungen fertig

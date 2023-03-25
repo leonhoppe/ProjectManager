@@ -14,7 +14,7 @@ services:
     environment:
       - FRONTEND=https://example.com
       - GENERAL__DATABASE=server=1.2.3.4;database=ProjectManager;user=ProjectManager;password=changeMe
-      - GENERAL__ROOT=/projects
+      - GENERAL__ROOT=/projects/
       - PROXY__ENABLE=true
       - PROXY__URL=https://proxy.example.com
       - PROXY__EMAIL=admin@example.com
