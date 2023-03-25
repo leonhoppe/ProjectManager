@@ -25,7 +25,7 @@ export class CrudService {
     'Authorization': ''
   });
 
-  constructor(private client: HttpClient, private storage: StorageService) {
+  constructor(public client: HttpClient, private storage: StorageService) {
     this.getBackendUrl().then(() => {
       this.authKey = storage.getItem("api_key");
       this.setAuthKey(this.authKey);

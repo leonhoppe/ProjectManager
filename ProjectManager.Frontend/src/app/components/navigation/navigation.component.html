@@ -8,24 +8,24 @@
     <mat-selection-list id="actions">
       <mat-list-item routerLink="/dashboard">
         <mat-icon matListItemIcon>dashboard</mat-icon>
-        <div matListItemTitle>Übersicht</div>
+        <div matListItemTitle>{{langs.currentLang?.dashboard}}</div>
       </mat-list-item>
       <mat-list-item (click)="logout()">
         <mat-icon matListItemIcon>logout</mat-icon>
-        <div matListItemTitle>Ausloggen</div>
+        <div matListItemTitle>{{langs.currentLang?.logout}}</div>
       </mat-list-item>
       <mat-list-item (click)="createProject()">
         <mat-icon matListItemIcon>add</mat-icon>
-        <div matListItemTitle>Neues Projekt</div>
+        <div matListItemTitle>{{langs.currentLang?.createProject}}</div>
       </mat-list-item>
 
       <mat-divider></mat-divider>
 
-      <div mat-subheader>Projekte</div>
-      <mat-list-item *ngFor="let project of projects.projects" (click)="openProject(project.projectId)">
+      <div mat-subheader>{{langs.currentLang?.projects}}</div>
+      <mat-list-item *ngFor="let project of projects.projects" (click)="openProject(project.projectId)" class="project">
         <mat-icon matListItemIcon>open_in_new</mat-icon>
         <div matListItemTitle>{{project.name}}</div>
-        <div matListItemLine [ngClass]="{startColor: project.running, stopColor: !project.running}">{{project.running ? 'Läuft' : 'Gestoppt'}}</div>
+        <div matListItemLine [ngClass]="{startColor: project.running, stopColor: !project.running}">{{project.running ? langs.currentLang?.running : langs.currentLang?.stopped}}</div>
       </mat-list-item>
     </mat-selection-list>
 
@@ -37,8 +37,16 @@
     <span>Project Manager</span>
 
     <section id="top-actions">
-      <button mat-icon-button (click)="onModeChange()" matTooltip="Farbmodus ändern"><mat-icon>{{darkMode ? 'light_mode' : 'dark_mode'}}</mat-icon></button>
-      <button mat-icon-button routerLink="/profile" *ngIf="showActions()" matTooltip="Profil Einstellungen"><mat-icon>account_circle</mat-icon></button>
+      <button mat-icon-button [matMenuTriggerFor]="menu" [matTooltip]="langs.currentLang?.selectLang"><mat-icon>language</mat-icon></button>
+      <mat-menu #menu>
+        <button mat-menu-item (click)="langs.setLanguage(language)" *ngFor="let language of langs.allLanguages">
+          <mat-icon>language</mat-icon>
+          <span>{{language}}</span>
+        </button>
+      </mat-menu>
+
+      <button mat-icon-button (click)="onModeChange()" [matTooltip]="langs.currentLang?.design"><mat-icon>{{darkMode ? 'light_mode' : 'dark_mode'}}</mat-icon></button>
+      <button mat-icon-button routerLink="/profile" *ngIf="showActions()" [matTooltip]="langs.currentLang?.profileSettings"><mat-icon>account_circle</mat-icon></button>
     </section>
   </mat-toolbar>
 

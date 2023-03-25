@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ProjectService} from "../../services/project.service";
 import {CrudService} from "../../services/crud.service";
 import {Router} from "@angular/router";
@@ -8,6 +8,9 @@ import {firstValueFrom} from "rxjs";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {TextDialogComponent} from "../../components/text-dialog/text-dialog.component";
 import {NavigationComponent} from "../../components/navigation/navigation.component";
+import {Project} from "../../entities/project";
+import {LangService} from "../../services/lang.service";
+import {Language} from "../../entities/language";
 
 @Component({
   selector: 'app-dashboard',
@@ -16,7 +19,17 @@ import {NavigationComponent} from "../../components/navigation/navigation.compon
 })
 export class DashboardComponent {
 
-  public constructor(public crud: CrudService, public projects: ProjectService, public router: Router, private dialog: MatDialog, private snackBar: MatSnackBar) {}
+  public constructor(public langs: LangService, public crud: CrudService, public projects: ProjectService, public router: Router, private dialog: MatDialog, private snackBar: MatSnackBar) {}
+
+  public async openProject(projectId: string) {
+    const response = await this.crud.sendGetRequest<{url: string}>('projects/' + projectId + '/url/string');
+    const url = response.content.url;
+    if (!url.startsWith("https")) {
+      window.open(`${this.crud.backendUrl}projects/${projectId}/url?token=${this.crud.authKey}`, '_blank').focus();
+    } else {
+      await this.router.navigate(['/project', projectId]);
+    }
+  }
 
   public async editProject(projectId: string) {
     const dialogRef = this.dialog.open(TextDialogComponent, {

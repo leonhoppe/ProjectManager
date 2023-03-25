@@ -82,6 +82,8 @@ public class ProjectApi : IProjectApi {
         await _docker.DeleteContainer(project.ContainerName);
 
         await _proxy.RemoveLocation(project.ProxyId, project.CertificateId);
+
+        Directory.Delete(_options.Root + projectId, true);
         
         _context.Projects.Remove(project);
         await _context.SaveChangesAsync();

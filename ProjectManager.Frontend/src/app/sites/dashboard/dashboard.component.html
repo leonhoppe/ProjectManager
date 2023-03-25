@@ -1,9 +1,9 @@
 <section id="main">
-  <h1 id="welcome">Willkommen {{crud.user.username}}</h1>
+  <h1 id="welcome">{{langs.currentLang?.welcome}} {{crud.user.username}}</h1>
 
-  <h2 id="title">Projekte</h2>
+  <h2 id="title">{{langs.currentLang?.projects}}</h2>
   <div id="projects">
-    <span *ngIf="projects.projects.length == 0 && crud.user != undefined" class="disabled">Du hast noch keine Projekte erstellt</span>
+    <span *ngIf="projects.projects.length == 0 && crud.user != undefined" class="disabled">{{langs.currentLang?.noProjects}}</span>
     <mat-card *ngFor="let project of projects.projects" class="project">
       <mat-card-header>
         <mat-card-title>{{project.name}}</mat-card-title>
@@ -11,9 +11,9 @@
       </mat-card-header>
 
       <mat-card-actions>
-        <button mat-button color="primary" (click)="router.navigate(['/project', project.projectId])">Öffnen</button>
-        <button mat-button color="accent" (click)="editProject(project.projectId)">Bearbeiten</button>
-        <button mat-button color="warn" (click)="deleteProject(project.projectId)">Löschen</button>
+        <button mat-button color="primary" (click)="openProject(project.projectId)">{{langs.currentLang?.open}}</button>
+        <button mat-button color="accent" (click)="editProject(project.projectId)">{{langs.currentLang?.edit}}</button>
+        <button mat-button color="warn" (click)="deleteProject(project.projectId)">{{langs.currentLang?.delete}}</button>
 
         <button mat-icon-button color="warn" *ngIf="project.running" (click)="updateProjectStatus(project.projectId, false)"><mat-icon>pause</mat-icon></button>
         <button mat-icon-button color="accent" *ngIf="!project.running" (click)="updateProjectStatus(project.projectId, true)"><mat-icon>play_arrow</mat-icon></button>

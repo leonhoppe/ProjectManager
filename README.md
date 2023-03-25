@@ -6,7 +6,7 @@ Es handelt sich hierbei um ein einfach zu benutzendes WebInterface zum Erstellen
 - [x] Automatische Docker Konfiguration
 - [x] Automatisches DNS Mapping
 - [x] Automatische SSL-Konfiguration mithilfe von NginxProxyManager
-- [ ] Projekt Transferierung auf verschiedene Nodes
+- [ ] Projekte exportieren / importieren
 - [ ] Eigene Domains
 - [ ] Mehrere Sprachen
 
@@ -60,7 +60,7 @@ services:
 
 ### SourceCode bearbeiten und Docker Images selber erstellen
 Falls Sie den SourceCode selbst bearbeiten wollen, steht Ihnen dieser natürlich zur Verfügung. Um das Backend im Debug Modus zu verwenden sollten sie eine 
-``appsettings.Development.json`` Datei im Hauptverzeichnis anlegen um dort die entsprechende Konfiguration für die Entwicklungsumgebung erstellen.
+``appsettings.Development.json`` Datei im Hauptverzeichnis anlegen, um dort die entsprechende Konfiguration für die Entwicklungsumgebung erstellen.
 Zum Debuggen empfehle ich ``npm run dev:ssr`` um das Frontend zu starten und ``dotnet run`` um das Backend zu starten. Sofern Sie mit den Bearbeitungen fertig
 sind, gibt es eine ``docker-compose.example.yml`` Datei im dem Repository die automatisch den SoruceCode neu baut und die Container startet.
 Wahlweise können Sie diese mit ``docker build`` auch selbst bauen.

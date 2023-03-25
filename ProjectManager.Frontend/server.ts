@@ -3,7 +3,7 @@ import 'zone.js/node';
 import { APP_BASE_HREF } from '@angular/common';
 import { ngExpressEngine } from '@nguniversal/express-engine';
 import * as express from 'express';
-import { existsSync } from 'fs';
+import { existsSync, readdirSync } from 'fs';
 import { join } from 'path';
 
 import { AppServerModule } from './src/main.server';
@@ -25,10 +25,15 @@ export function app(): express.Express {
   // Example Express Rest API endpoints
   // server.get('/api/**', (req, res) => { });
   server.get('/backend', (req, res) => {
-    let backend = process.env['BACKEND']
+    let backend = process.env['BACKEND'] || "http://localhost:5110/";
     if (!backend?.endsWith("/")) backend += "/";
     res.json({url: backend});
   });
+
+  server.get('/lang', (req, res) => {
+    const files: string[] = readdirSync(distFolder + "/assets/languages");
+    res.json({files});
+  })
 
   // Serve static files from /browser
   server.get('*.*', express.static(distFolder, {

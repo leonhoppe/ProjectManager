@@ -89,6 +89,16 @@ public class ProjectController : ControllerBase {
     }
 
     [Authorized]
+    [HttpGet("{projectId}/url/string")]
+    public IActionResult GetProjectUrlHead(string projectId) {
+        var project = _projects.GetProject(projectId);
+        if (project == null) return NotFound();
+        if (project.OwnerId != _context.UserId) return Unauthorized();
+        if (_options.Enable) return Ok(new {url = $"https://{projectId}.{_options.Domain}/_/"});
+        return Ok(new {url = $"http://{_options.Host}:{project.Port}/_/"});
+    }
+
+    [Authorized]
     [HttpGet("{projectId}/start")]
     public async Task<IActionResult> StartProject(string projectId) {
         var project = _projects.GetProject(projectId);

@@ -36,7 +36,7 @@ if (app.Environment.IsDevelopment()) {
 
 app.UseCors(
     options => options
-        .WithOrigins(new []{app.Configuration.GetSection("Frontend").Get<string>() ?? ""})
+        .WithOrigins(app.Configuration.GetSection("Frontend").Get<string>() ?? "")
         .AllowAnyMethod()
         .AllowAnyHeader()
         .AllowCredentials()
@@ -45,5 +45,10 @@ app.UseCors(
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapGet("", async context => {
+    context.Response.StatusCode = StatusCodes.Status200OK;
+    await context.Response.BodyWriter.WriteAsync("Ok"u8.ToArray());
+    await context.Response.BodyWriter.CompleteAsync();
+});
 
 app.Run();

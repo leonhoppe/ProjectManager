@@ -1,46 +1,46 @@
 <mat-card id="content">
   <mat-card-header>
-    <mat-card-title>Profil</mat-card-title>
-    <mat-card-subtitle>Einstellungen</mat-card-subtitle>
+    <mat-card-title>{{langs.currentLang?.profile}}</mat-card-title>
+    <mat-card-subtitle>{{langs.currentLang?.profileSub}}</mat-card-subtitle>
   </mat-card-header>
 
   <mat-card-content id="main">
     <form [formGroup]="form" (ngSubmit)="update()" id="form">
       <mat-form-field>
-        <mat-label>E-Mail</mat-label>
+        <mat-label>{{langs.currentLang?.email}}</mat-label>
         <input type="text" matInput formControlName="email" required>
-        <mat-error *ngIf="form.hasError('required', 'email')">E-Mail ist erforderlich</mat-error>
+        <mat-error *ngIf="form.hasError('required', 'email')">{{langs.currentLang?.email}} {{langs.currentLang?.isRequired}}</mat-error>
         <mat-error *ngIf="form.hasError('email', 'email') && !form.hasError('required', 'email')">
-          Bitte geben Sie eine gültige E-Mail-Adresse ein
+          {{langs.currentLang?.validEmail}}
         </mat-error>
         <mat-error *ngIf="form.hasError('maxlength', 'email') && !form.hasError('required', 'email')">
-          Der eingegebene Wert ist zu lang
+          {{langs.currentLang?.valueToLong}}
         </mat-error>
       </mat-form-field>
 
       <mat-form-field>
-        <mat-label>Benutzername</mat-label>
+        <mat-label>{{langs.currentLang?.username}}</mat-label>
         <input type="text" matInput formControlName="username" required>
-        <mat-error *ngIf="form.hasError('required', 'username')">Benutzername ist erforderlich</mat-error>
+        <mat-error *ngIf="form.hasError('required', 'username')">{{langs.currentLang?.username}} {{langs.currentLang?.isRequired}}</mat-error>
         <mat-error *ngIf="form.hasError('maxlength', 'username') && !form.hasError('required', 'username')">
-          Der eingegebene Wert ist zu lang
+          {{langs.currentLang?.valueToLong}}
         </mat-error>
       </mat-form-field>
 
       <div>
         <mat-form-field>
-          <mat-label>Passwort</mat-label>
+          <mat-label>{{langs.currentLang?.password}}</mat-label>
           <input type="password" matInput formControlName="password">
           <mat-error *ngIf="form.hasError('maxlength', 'password')">
-            Der eingegebene Wert ist zu lang
+            {{langs.currentLang?.valueToLong}}
           </mat-error>
         </mat-form-field>
 
         <mat-form-field>
-          <mat-label>Passwort wiederholen</mat-label>
+          <mat-label>{{langs.currentLang?.passwordRepeat}}</mat-label>
           <input type="password" matInput formControlName="passwordRepeat">
           <mat-error *ngIf="form.hasError('maxlength', 'passwordRepeat')">
-            Der eingegebene Wert ist zu lang
+            {{langs.currentLang?.valueToLong}}
           </mat-error>
         </mat-form-field>
       </div>
@@ -51,7 +51,7 @@
   </mat-card-content>
 
   <mat-card-actions id="actions">
-    <button mat-button color="primary" (click)="update()">Account aktualisieren</button>
-    <button mat-button color="warn" (click)="delete()">Account löschen</button>
+    <button mat-button color="primary" (click)="update()">{{langs.currentLang?.updateAccount}}</button>
+    <button mat-button color="warn" (click)="delete()">{{langs.currentLang?.deleteAccount}}</button>
   </mat-card-actions>
 </mat-card>

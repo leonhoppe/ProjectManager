@@ -26,6 +26,7 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import { TextDialogComponent } from './components/text-dialog/text-dialog.component';
 import { ProjectComponent } from './sites/project/project.component';
+import {MatMenuModule} from "@angular/material/menu";
 
 @NgModule({
   declarations: [
@@ -40,7 +41,7 @@ import { ProjectComponent } from './sites/project/project.component';
     ProjectComponent
   ],
     imports: [
-        BrowserModule.withServerTransition({ appId: 'serverApp' }),
+        BrowserModule.withServerTransition({appId: 'serverApp'}),
         AppRoutingModule,
         BrowserAnimationsModule,
         HttpClientModule,
@@ -57,7 +58,8 @@ import { ProjectComponent } from './sites/project/project.component';
         FormsModule,
         MatDialogModule,
         MatSnackBarModule,
-        MatTooltipModule
+        MatTooltipModule,
+        MatMenuModule
     ],
   providers: [],
   bootstrap: [AppComponent]

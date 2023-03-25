@@ -1,8 +1,10 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {CrudService} from "../../services/crud.service";
 import {Router} from "@angular/router";
 import {User} from "../../entities/user";
+import {Language} from "../../entities/language";
+import {LangService} from "../../services/lang.service";
 
 @Component({
   selector: 'app-register',
@@ -18,7 +20,7 @@ export class RegisterComponent {
   });
   public error: string;
 
-  public constructor(private crud: CrudService, private router: Router) {}
+  public constructor(public langs: LangService, private crud: CrudService, private router: Router) {}
 
   public async submit() {
     this.error = "";
@@ -28,14 +30,14 @@ export class RegisterComponent {
     const passwordRepeat = this.form.get("passwordRepeat").value;
 
     if (password != passwordRepeat) {
-      this.error = "Passwörter stimmen nicht überein";
+      this.error = this.langs.currentLang?.passwordsDontMatch;
       return;
     }
 
     const user: User = {email, username, password};
     const result = await this.crud.sendPostRequest<{token: string}>("users/register", user);
     if (!result.success) {
-      this.error = "Registrierung fehlgeschlagen";
+      this.error = this.langs.currentLang?.registerFailed;
       return;
     }
 

@@ -1,8 +1,10 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {CrudService} from "../../services/crud.service";
 import {User} from "../../entities/user";
 import {Router} from "@angular/router";
+import {Language} from "../../entities/language";
+import {LangService} from "../../services/lang.service";
 
 @Component({
   selector: 'app-login',
@@ -16,7 +18,7 @@ export class LoginComponent {
   });
   public error: string;
 
-  public constructor(private crud: CrudService, private router: Router) {
+  public constructor(public langs: LangService, private crud: CrudService, private router: Router) {
     this.form.reset();
     this.error = "";
   }
@@ -33,7 +35,7 @@ export class LoginComponent {
       await this.crud.loadUser(true);
       await this.router.navigate(["/dashboard"]);
     }else {
-      this.error = "E-Mail oder Passwort ist falsch";
+      this.error = this.langs.currentLang.emailOrPasswordWrong;
     }
   }
 }

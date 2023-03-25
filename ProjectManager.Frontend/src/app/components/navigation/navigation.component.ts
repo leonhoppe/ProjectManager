@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {CrudService} from "../../services/crud.service";
 import {ProjectService} from "../../services/project.service";
@@ -7,6 +7,8 @@ import {TextDialogComponent} from "../text-dialog/text-dialog.component";
 import {firstValueFrom} from "rxjs";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {StorageService} from "../../services/storage.service";
+import {LangService} from "../../services/lang.service";
+import {Language} from "../../entities/language";
 
 @Component({
   selector: 'app-navigation',
@@ -17,7 +19,7 @@ export class NavigationComponent {
   public static spinnerVisible: boolean = false;
   public darkMode: boolean;
 
-  public constructor(public router: Router, public crud: CrudService, public projects: ProjectService, public dialog: MatDialog, private snackBar: MatSnackBar, private storage: StorageService) {
+  public constructor(public router: Router, public langs: LangService, public crud: CrudService, public projects: ProjectService, public dialog: MatDialog, private snackBar: MatSnackBar, private storage: StorageService) {
     this.darkMode = storage.getItem("darkMode") == "true";
   }
 
