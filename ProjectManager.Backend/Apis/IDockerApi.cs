@@ -38,7 +38,6 @@ public sealed class DockerApi : IDockerApi {
                     $"{hostVolumePath}:/pb_data"
                 },
                 RestartPolicy = new RestartPolicy {
-                    MaximumRetryCount = 3,
                     Name = RestartPolicyKind.UnlessStopped
                 }
             },
