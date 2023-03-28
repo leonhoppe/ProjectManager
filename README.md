@@ -1,18 +1,18 @@
 # Project Manager
-Der ProjectManager ist ein Tool zum Verwalten von mehreren PocketBase Instanzen.
-Es handelt sich hierbei um ein einfach zu benutzendes WebInterface zum Erstellen, Bearbeiten und Löschen von PocketBase Instanzen.
+The ProjectManager is a tool for managing multiple PocketBase instances.
+It is an easy-to-use web interface for creating, editing and deleting PocketBase instances.
 
 ## Features
-- [x] Automatische Docker Konfiguration
-- [x] Automatisches DNS Mapping
-- [x] Automatische SSL-Konfiguration mithilfe von NginxProxyManager
-- [x] Mehrere Sprachen
-- [x] Eigene Domains
-- [ ] Projekte exportieren / importieren
+- [x] Automatic Docker configuration
+- [x] Automatic DNS Mapping
+- [x] Automatic SSL configuration using NginxProxyManager
+- [x] Multiple languages
+- [x] Own domains
+- [ ] Export / import projects
 
 ## Installation
-Die Installation erfolgt durch eine Docker-Compose Datei. Hierbei werden zwei Container, einer für das Backend und einer für das Frontend, gestartet.
-Die Standartkonfiguration sieht wie folgt aus:
+The installation is done using a Docker-Compose file. Two containers, one for the backend and one for the frontend, are started here.
+The default configuration looks like this:
 
 ```yml
 version: '3.0'
@@ -43,24 +43,24 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
 ```
-### Environment Variablen
+### Environment variables
 
-| Variable          | Bedeutung                                                            |
-|-------------------|----------------------------------------------------------------------|
-| BACKEND           | Die URL des Backends                                                 |
-| FRONTEND          | Die URL des Frontends                                                |
-| GENERAL__DATABASE | Der MySql Connection String                                          |
-| GENERAL__ROOT     | Ordner auf dem Hostsystem zur Speicherung der PocketBase Dateien     |
-| PROXY__ENABLE     | Aktiviert die eingebaute SSL Verschlüsselung durch NginxProxyManager |
-| PROXY__URL        | Die URL für das WebInterface des NginxProxyManager                   |
-| PROXY__EMAIL      | E-Mail-Adresse für einen Admin Benutzer von NginxProxyManager        |
-| PROXY__PASSWORD   | Passwort für einen Admin Benutzer von NginxProxyManager              |
-| PROXY__DOMAIN     | Standart Domain für PocketBase instanzen ([id].api.example.com)      |
-| PROXY__HOST       | Hostadresse des Servers (für die reverse proxy)                      |
+| Variable          | Bedeutung                                                       |
+|-------------------|-----------------------------------------------------------------|
+| BACKEND           | The backend url                                                 |
+| FRONTEND          | The frontend url                                                |
+| GENERAL__DATABASE | The MySql connection string                                     |
+| GENERAL__ROOT     | Folder on the host system for storing the PocketBase files      |
+| PROXY__ENABLE     | Enables built-in SSL encryption with NginxProxyManager          |
+| PROXY__URL        | The URL for the NginxProxyManager web interface                 |
+| PROXY__EMAIL      | Email address for an admin user of NginxProxyManager            |
+| PROXY__PASSWORD   | Password for an admin user of NginxProxyManager                 |
+| PROXY__DOMAIN     | Standard domain for PocketBase instances ([id].api.example.com) |
+| PROXY__HOST       | Server host address (for the reverse proxy)                     |
 
-### SourceCode bearbeiten und Docker Images selber erstellen
-Falls Sie den SourceCode selbst bearbeiten wollen, steht Ihnen dieser natürlich zur Verfügung. Um das Backend im Debug Modus zu verwenden sollten sie eine 
-``appsettings.Development.json`` Datei im Hauptverzeichnis anlegen, um dort die entsprechende Konfiguration für die Entwicklungsumgebung erstellen.
-Zum Debuggen empfehle ich ``npm run dev:ssr`` um das Frontend zu starten und ``dotnet run`` um das Backend zu starten. Sofern Sie mit den Bearbeitungen fertig
-sind, gibt es eine ``docker-compose.example.yml`` Datei im dem Repository die automatisch den SoruceCode neu baut und die Container startet.
-Wahlweise können Sie diese mit ``docker build`` auch selbst bauen.
+### Edit source code and create Docker images yourself
+If you want to edit the source code yourself, it is of course available to you. To use the backend in debug mode you should use a
+``appsettings.Development.json`` file in the main directory to create the appropriate configuration for the development environment.
+For debugging I recommend ``npm run dev:ssr`` to start the frontend and ``dotnet run`` to start the backend. Unless you're done with the edits
+there is a ``docker-compose.example.yml`` file in the repository that automatically rebuilds the source code and starts the containers.
+Alternatively, you can build them yourself with ``docker build``.
