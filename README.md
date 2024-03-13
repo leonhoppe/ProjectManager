@@ -18,7 +18,7 @@ The default configuration looks like this:
 version: '3.0'
 services:
   frontend:
-    image: git.leon-hoppe.de/leon.hoppe/projectmanager_frontend:latest
+    image: ghcr.io/leonhoppe/projectmanager/frontend:latest
     restart: unless-stopped
     environment:
       - BACKEND=https://api.example.com
@@ -26,7 +26,7 @@ services:
       - '4220:4000'
 
   backend:
-    image: git.leon-hoppe.de/leon.hoppe/projectmanager_backend:latest
+    image: ghcr.io/leonhoppe/projectmanager/backend:latest
     restart: unless-stopped
     environment:
       - FRONTEND=https://example.com
